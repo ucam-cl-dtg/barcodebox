@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="uk.ac.cam.cl.dtg.android.pem.barcodebox">
 	<application android:icon="@drawable/barcodebox"
-		android:debuggable="true" android:theme="@android:style/Theme.Light">
+		android:theme="@android:style/Theme.Light">
 		<activity android:label="@string/application_name"
 			android:name=".BarcodeBox">
 			<intent-filter>
