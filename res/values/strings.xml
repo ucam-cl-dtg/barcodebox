@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="application_name">Barcode Box</string>
+	<string name="button_cancel">Cancel</string>
+	<string name="button_create">Create</string>
+	<string name="button_delete">Delete</string>
+	<string name="button_scan">Scan</string>
+	<string name="context_delete">Delete</string>
+	<string name="context_edit">Edit</string>
+	<string name="context_launch">Launch</string>
+	<string name="context_view">View</string>
+	<string name="dialog_adding_barcode">Adding barcode: </string>
+	<string name="dialog_barcode_scanner_prompt_message">This application requires Barcode Scanner. Would you like to install it?</string>
+	<string name="dialog_barcode_scanner_prompt_title">Install Barcode Scanner?</string>
+	<string name="dialog_delete_all">Are you sure you want to delete all barcodes?</string>
+	<string name="dialog_duplicate">Scanned barcode already exists in database, add anyway? Data:</string>
+	<string name="dialog_invalid_uri">Invalid data type</string>
+	<string name="dialog_no">No</string>
+	<string name="dialog_of_type">of type</string>
+	<string name="dialog_ok">OK</string>
+	<string name="dialog_yes">Yes</string>
+	<string name="edit_cancel">Cancel</string>
+	<string name="edit_notes">Notes</string>
+	<string name="edit_save">Save</string>
+	<string name="edit_type">Type</string>
+	<string name="edit_type_prompt">Choose a type</string>
+	<string name="edit_value">Value</string>
+	<string name="menu_delete_all">Delete all</string>
+	<string name="menu_delete_multiple">Delete multiple</string>
+	<string name="no_barcodes">No barcodes yet</string>
+
+	<string-array name="types_array">
+        <item>QR_CODE</item>
+        <item>DATAMATRIX</item>
+        <item>UPC_E</item>
+        <item>UPC_A</item>
+        <item>EAN_8</item>
+        <item>EAN_13</item>
+        <item>UPC_EAN_EXTENSION</item>
+        <item>CODE_128</item>
+        <item>CODE_39</item>
+        <item>CODE_93</item>
+        <item>CODE_93</item>
+        <item>ITF</item>
+        <item>RSS14</item>
+        <item>PDF417</item>        
+        <item>RSS_EXPANDED</item>        
+    </string-array>
+<!--	From http://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/BarcodeFormat.java-->
+	
+</resources>
