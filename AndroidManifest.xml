@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="uk.ac.cam.cl.dtg.android.pem.barcodebox">
+	package="uk.ac.cam.cl.dtg.android.pem.barcodebox" android:versionCode="1"
+	android:versionName="1.0">
 	<application android:icon="@drawable/barcodebox"
 		android:theme="@android:style/Theme.Light">
 		<activity android:label="@string/application_name"
@@ -20,4 +21,5 @@
 			android:name=".BarcodeDelete">
 		</activity>
 	</application>
+	<uses-sdk android:minSdkVersion="3"></uses-sdk>
 </manifest> 
