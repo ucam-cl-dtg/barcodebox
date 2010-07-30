@@ -3,7 +3,7 @@
 	package="uk.ac.cam.cl.dtg.android.pem.barcodebox" android:versionCode="1"
 	android:versionName="1.0">
 	<application android:icon="@drawable/barcodebox"
-		android:theme="@android:style/Theme.Light">
+	android:label="@string/application_name" android:theme="@android:style/Theme.Light">
 		<activity android:label="@string/application_name"
 			android:name=".BarcodeBox">
 			<intent-filter>
