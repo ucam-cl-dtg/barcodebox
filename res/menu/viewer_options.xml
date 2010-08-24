@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/viewer_menu_options_delete_multiple"
+		android:title="@string/viewer_menu_options_delete_multiple"
+		android:icon="@drawable/barcodebox" />
+	<item android:id="@+id/viewer_menu_options_delete_all"
+		android:title="@string/viewer_menu_options_delete_all"
+		android:icon="@drawable/barcodebox" />
+</menu>

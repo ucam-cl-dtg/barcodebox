@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/viewer_menu_context_launch" android:title="@string/viewer_menu_context_launch" />
+	<item android:id="@+id/viewer_menu_context_edit" android:title="@string/viewer_menu_context_edit" />
+	<item android:id="@+id/viewer_menu_context_share" android:title="@string/viewer_menu_context_share" />
+	<item android:id="@+id/viewer_menu_context_delete" android:title="@string/viewer_menu_context_delete" />
+</menu>

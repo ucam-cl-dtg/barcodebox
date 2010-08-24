@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="uk.ac.cam.cl.dtg.android.pem.barcodebox" android:versionCode="1"
-	android:versionName="1.0">
+	android:versionCode="2" android:versionName="1.1"
+	package="uk.ac.cam.cl.dtg.android.pem.barcodebox">
 	<application android:icon="@drawable/barcodebox"
-	android:label="@string/application_name" android:theme="@android:style/Theme.Light">
-		<activity android:label="@string/application_name"
-			android:name=".BarcodeBox">
+		android:label="@string/application_name" android:name=".BarcodeBox"
+		android:theme="@android:style/Theme.Light">
+		<activity android:label="@string/activity_viewer"
+			android:name=".activities.Viewer">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:label="@string/application_name"
-			android:name=".BarcodeAdd">
+		<activity android:label="@string/activity_add" android:name=".activities.Add">
 		</activity>
-		<activity android:label="@string/application_name"
-			android:name=".BarcodeEdit">
+		<activity android:label="@string/activity_edit" android:name=".activities.Edit">
 		</activity>
-		<activity android:label="@string/application_name"
-			android:name=".BarcodeDelete">
+		<activity android:label="@string/activity_delete"
+			android:name=".activities.Delete">
 		</activity>
 	</application>
 	<uses-sdk android:minSdkVersion="3"></uses-sdk>

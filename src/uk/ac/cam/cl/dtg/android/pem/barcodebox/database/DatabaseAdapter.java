@@ -1,4 +1,4 @@
-package uk.ac.cam.cl.dtg.android.pem.barcodebox;
+package uk.ac.cam.cl.dtg.android.pem.barcodebox.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.util.Log;
  * @author David Piggott
  * 
  */
-public class BarcodePadDbAdapter {
+public class DatabaseAdapter {
 
 	// Used for database creation and upgrade management
 	private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -49,7 +49,7 @@ public class BarcodePadDbAdapter {
 	private DatabaseHelper mDbHelper;
 
 	// We don't do anything else on construction - the open() method does more
-	public BarcodePadDbAdapter(Context context) {
+	public DatabaseAdapter(Context context) {
 		this.mContext = context;
 	}
 
@@ -125,7 +125,7 @@ public class BarcodePadDbAdapter {
 	}
 
 	// Open the database making use of the SQLiteOpenHelper extension
-	public BarcodePadDbAdapter open() throws SQLException {
+	public DatabaseAdapter open() throws SQLException {
 		mDbHelper = new DatabaseHelper(mContext);
 		mDb = mDbHelper.getWritableDatabase();
 		return this;

@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="activity_add">Barcode Box</string>
+	<string name="activity_delete">Barcode Box</string>
+	<string name="activity_edit">Barcode Box</string>
+	<string name="activity_viewer">Barcode Box</string>
+	<string name="add_dialog_barcode_read_message_first_part">Adding barcode:</string>
+	<string name="add_dialog_barcode_read_message_second_part">of type</string>
+	<string name="add_dialog_barcode_read_title"></string>
+	<string name="add_dialog_barcode_read_button_negative"></string>
+	<string name="add_dialog_barcode_read_button_positive">OK</string>
+	<string name="add_dialog_duplicate_message">Scanned barcode already exists in database, add anyway? Data:</string>
+	<string name="add_dialog_duplicate_title"></string>
+	<string name="add_dialog_duplicate_button_negative">No</string>
+	<string name="add_dialog_duplicate_button_positive">Yes</string>
+	<string name="add_dialog_scanner_error_message">Error scanning QR code.</string>
+	<string name="add_dialog_scanner_error_title">Scanning error</string>
+	<string name="add_dialog_scanner_error_button_negative"></string>
+	<string name="add_dialog_scanner_error_button_positive">OK</string>
 	<string name="application_name">Barcode Box</string>
-	<string name="button_cancel">Cancel</string>
-	<string name="button_create">Create</string>
-	<string name="button_delete">Delete</string>
-	<string name="button_scan">Scan</string>
-	<string name="context_delete">Delete</string>
-	<string name="context_edit">Edit</string>
-	<string name="context_launch">Launch</string>
-	<string name="context_view">View</string>
-	<string name="dialog_adding_barcode">Adding barcode: </string>
-	<string name="dialog_barcode_scanner_prompt_message">This application requires Barcode Scanner. Would you like to install it?</string>
-	<string name="dialog_barcode_scanner_prompt_title">Install Barcode Scanner?</string>
-	<string name="dialog_delete_all">Are you sure you want to delete all barcodes?</string>
-	<string name="dialog_duplicate">Scanned barcode already exists in database, add anyway? Data:</string>
-	<string name="dialog_invalid_uri">Invalid data type</string>
-	<string name="dialog_no">No</string>
-	<string name="dialog_of_type">of type</string>
-	<string name="dialog_ok">OK</string>
-	<string name="dialog_yes">Yes</string>
-	<string name="edit_cancel">Cancel</string>
-	<string name="edit_notes">Notes</string>
-	<string name="edit_save">Save</string>
-	<string name="edit_type">Type</string>
-	<string name="edit_type_prompt">Choose a type</string>
-	<string name="edit_value">Value</string>
-	<string name="menu_delete_all">Delete all</string>
-	<string name="menu_delete_multiple">Delete multiple</string>
-	<string name="no_barcodes">No barcodes yet</string>
-
+	<string name="delete_button_cancel">Cancel</string>
+	<string name="delete_button_delete">Delete</string>
+	<string name="delete_textview_list_empty">No barcodes yet</string>
+	<string name="edit_button_cancel">Cancel</string>
+	<string name="edit_button_save">Save</string>
+	<string name="edit_spinner_type">Choose a type</string>
+	<string name="edit_textview_notes">Notes</string>
+	<string name="edit_textview_type">Type</string>
+	<string name="edit_textview_value">Value</string>
+	<string name="viewer_button_create">Create</string>
+	<string name="viewer_button_scan">Scan</string>
+	<string name="viewer_dialog_barcode_scanner_prompt_message">This action requires Barcode Scanner. Would you like to install it?</string>
+	<string name="viewer_dialog_barcode_scanner_prompt_title">Install Barcode Scanner?</string>
+	<string name="viewer_dialog_barcode_scanner_prompt_button_negative">No</string>
+	<string name="viewer_dialog_barcode_scanner_prompt_button_positive">Yes</string>
+	<string name="viewer_dialog_delete_all_message">Are you sure you want to delete all barcodes?</string>
+	<string name="viewer_dialog_delete_all_title"></string>
+	<string name="viewer_dialog_delete_all_button_negative">No</string>
+	<string name="viewer_dialog_delete_all_button_positive">Yes</string>
+	<string name="viewer_dialog_invalid_uri_message">Invalid data type</string>
+	<string name="viewer_dialog_invalid_uri_title"></string>
+	<string name="viewer_dialog_invalid_uri_button_negative"></string>
+	<string name="viewer_dialog_invalid_uri_button_positive">OK</string>
+	<string name="viewer_menu_context_delete">Delete</string>
+	<string name="viewer_menu_context_edit">Edit</string>
+	<string name="viewer_menu_context_launch">Launch</string>
+	<string name="viewer_menu_context_share">Share</string>
+	<string name="viewer_menu_options_delete_all">Delete all</string>
+	<string name="viewer_menu_options_delete_multiple">Delete multiple</string>
+	<string name="viewer_textview_list_empty">No barcodes</string>
 	<string-array name="types_array">
         <item>QR_CODE</item>
         <item>DATAMATRIX</item>
@@ -47,5 +66,4 @@
         <item>RSS_EXPANDED</item>        
     </string-array>
 <!--	From http://code.google.com/p/zxing/source/browse/trunk/core/src/com/google/zxing/BarcodeFormat.java-->
-	
 </resources>
