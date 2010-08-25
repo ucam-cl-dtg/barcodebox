@@ -1,9 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/viewer_menu_options_delete_multiple"
-		android:title="@string/viewer_menu_options_delete_multiple"
-		android:icon="@android:drawable/ic_menu_delete" />
-	<item android:id="@+id/viewer_menu_options_delete_all"
-		android:title="@string/viewer_menu_options_delete_all" android:icon="@android:drawable/ic_menu_delete" />
 	<item android:id="@+id/viewer_menu_options_rapid_scanning"
 		android:title="@string/viewer_menu_options_rapid_scanning"
 		android:icon="@android:drawable/ic_menu_add" />
@@ -11,4 +6,9 @@
 		android:title="@string/viewer_menu_options_export_csv" android:icon="@android:drawable/ic_menu_save" />
 	<item android:id="@+id/viewer_menu_options_export_email"
 		android:title="@string/viewer_menu_options_export_email" android:icon="@android:drawable/ic_menu_send" />
+	<item android:id="@+id/viewer_menu_options_delete_multiple"
+		android:title="@string/viewer_menu_options_delete_multiple"
+		android:icon="@android:drawable/ic_menu_delete" />
+	<item android:id="@+id/viewer_menu_options_delete_all"
+		android:title="@string/viewer_menu_options_delete_all" android:icon="@android:drawable/ic_menu_delete" />
 </menu>

@@ -46,7 +46,7 @@
 	<string name="viewer_dialog_export_barcodes_error_title"></string>
 	<string name="viewer_dialog_export_barcodes_error_button_negative"></string>
 	<string name="viewer_dialog_export_barcodes_error_button_positive">OK</string>
-	<string name="viewer_dialog_invalid_uri_message">Invalid data type</string>
+	<string name="viewer_dialog_invalid_uri_message">Barcode data is not a valid URI.</string>
 	<string name="viewer_dialog_invalid_uri_title"></string>
 	<string name="viewer_dialog_invalid_uri_button_negative"></string>
 	<string name="viewer_dialog_invalid_uri_button_positive">OK</string>

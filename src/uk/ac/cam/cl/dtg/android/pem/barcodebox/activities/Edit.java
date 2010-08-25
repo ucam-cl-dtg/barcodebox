@@ -57,7 +57,7 @@ public class Edit extends Activity {
 				if (mRowId == null) {
 					mApplication.getDatabaseAdapter().createBarcode(type, value, notes);
 				} else {
-					mApplication.getDatabaseAdapter().updateBarcode(mRowId, type, value, notes);
+					mApplication.getDatabaseAdapter().update(mRowId, type, value, notes);
 				}
 				finish();
 			}
@@ -72,7 +72,7 @@ public class Edit extends Activity {
 		Bundle extras = getIntent().getExtras();
 		mRowId = extras != null ? extras.getLong(DatabaseAdapter.KEY_ROWID) : null;
 		if (mRowId != null) {
-			Cursor note = mApplication.getDatabaseAdapter().fetchBarcode(mRowId);
+			Cursor note = mApplication.getDatabaseAdapter().fetchSingle(mRowId);
 			mType = note.getString(note.getColumnIndexOrThrow(DatabaseAdapter.KEY_TYPE));
 			mValue = note.getString(note.getColumnIndexOrThrow(DatabaseAdapter.KEY_VALUE));
 			mNotes = note.getString(note.getColumnIndexOrThrow(DatabaseAdapter.KEY_NOTES));

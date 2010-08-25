@@ -37,6 +37,9 @@ public class DatabaseAdapter {
 
 	private static final String DATABASE_CREATE = "create table barcodes (_id integer primary key autoincrement, "
 			+ "type text not null, value text not null, notes text);";
+	// (minor issue):
+	// TODO: In a future release with a new database version, make the upgrade proces copy data out of
+	// the database called barcodepad and into a database called barcodebox
 	private static final String DATABASE_NAME = "barcodepad";
 	private static final String DATABASE_TABLE = "barcodes";
 	private static final int DATABASE_VERSION = 1;
@@ -80,13 +83,8 @@ public class DatabaseAdapter {
 		return mDb.delete(DATABASE_TABLE, null, null) > 0;
 	}
 
-	// Delete a single barcode
-	public boolean deleteBarcode(long rowId) {
-		return mDb.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
-	}
-
-	// Delete all rows with an _id in rows
-	public boolean deleteMany(Long rows[]) {
+	// Delete all rows in rows[]
+	public boolean deleteSelected(long rows[]) {
 		if (rows.length > 0) {
 			String where = "";
 			int i;
@@ -102,7 +100,12 @@ public class DatabaseAdapter {
 		}
 	}
 
-	// Check for existence of entry
+	// Delete a single barcode
+	public boolean deleteSingle(long rowId) {
+		return mDb.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
+	}
+
+	// Check for existence of barcode
 	public boolean exists(String type, String value) {
 		Cursor cursor = mDb.query(DATABASE_TABLE, new String[] { KEY_ROWID }, KEY_TYPE + "=\"" + type + "\" AND " + KEY_VALUE + "=\"" + value + "\"", null,
 				null, null, "1");
@@ -110,12 +113,12 @@ public class DatabaseAdapter {
 	}
 
 	// Get all barcodes
-	public Cursor fetchAllBarcodes() {
+	public Cursor fetchAll() {
 		return mDb.query(DATABASE_TABLE, new String[] { KEY_ROWID, KEY_TYPE, KEY_VALUE, KEY_NOTES }, null, null, null, null, null);
 	}
 
 	// Get a single barcode
-	public Cursor fetchBarcode(long rowId) throws SQLException {
+	public Cursor fetchSingle(long rowId) throws SQLException {
 		Cursor mCursor = mDb.query(true, DATABASE_TABLE, new String[] { KEY_ROWID, KEY_TYPE, KEY_VALUE, KEY_NOTES }, KEY_ROWID + "=" + rowId, null, null, null,
 				null, null);
 		if (mCursor != null) {
@@ -132,7 +135,7 @@ public class DatabaseAdapter {
 	}
 
 	// Change the properties of a barcode
-	public boolean updateBarcode(long rowId, String type, String value, String notes) {
+	public boolean update(long rowId, String type, String value, String notes) {
 		ContentValues args = new ContentValues();
 		args.put(KEY_TYPE, type);
 		args.put(KEY_VALUE, value);

@@ -29,13 +29,13 @@ public class Delete extends ListActivity {
 			@Override
 			public void onClick(View v) {
 				SparseBooleanArray array = getListView().getCheckedItemPositions();
-				Long rows[] = new Long[array.size()];
+				long rows[] = new long[array.size()];
 				for (int i = 0; i < array.size(); i++) {
 					if (array.get(array.keyAt(i))) {
 						rows[i] = getListView().getItemIdAtPosition(array.keyAt(i));
 					}
 				}
-				mApplication.getDatabaseAdapter().deleteMany(rows);
+				mApplication.getDatabaseAdapter().deleteSelected(rows);
 				finish();
 			}
 		});
@@ -45,7 +45,7 @@ public class Delete extends ListActivity {
 				finish();
 			}
 		});
-		Cursor barcodesCursor = mApplication.getDatabaseAdapter().fetchAllBarcodes();
+		Cursor barcodesCursor = mApplication.getDatabaseAdapter().fetchAll();
 		startManagingCursor(barcodesCursor);
 		String[] from = new String[] { DatabaseAdapter.KEY_VALUE };
 		int[] to = new int[] { android.R.id.text1 };

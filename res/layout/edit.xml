@@ -1,30 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/edit_panel" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:orientation="vertical">
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/edit_textview_type" />
-	<Spinner android:id="@+id/edit_spinner_type"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:prompt="@string/edit_spinner_type" />
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/edit_textview_value" />
-	<EditText android:id="@+id/edit_edittext_value"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:scrollbars="vertical" android:layout_weight="1" />
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/edit_textview_notes" />
-	<EditText android:id="@+id/edit_edittext_notes"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:scrollbars="vertical" android:layout_weight="1" />
-	<LinearLayout android:id="@+id/edit_bottom_bar"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal">
-		<Button android:text="@string/edit_button_save" android:id="@+id/edit_button_save"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:layout_weight="1" />
-		<Button android:text="@string/edit_button_cancel" android:id="@+id/edit_button_cancel"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:layout_weight="1" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:orientation="vertical" android:padding="0dip">
+	<LinearLayout android:background="@android:drawable/bottom_bar"
+		android:id="@+id/edit_bottom_bar" android:layout_alignParentBottom="true"
+		android:layout_height="wrap_content" android:layout_width="fill_parent"
+		android:orientation="horizontal" android:paddingBottom="1.0dip"
+		android:paddingLeft="4.0dip" android:paddingRight="4.0dip"
+		android:paddingTop="5.0dip">
+		<Button android:id="@+id/edit_button_save"
+			android:layout_height="fill_parent" android:layout_weight="1.0"
+			android:layout_width="0.0dip" android:text="@string/edit_button_save" />
+		<Button android:id="@+id/edit_button_cancel"
+			android:layout_height="fill_parent" android:layout_weight="1.0"
+			android:layout_width="0.0dip" android:text="@string/edit_button_cancel" />
 	</LinearLayout>
-</LinearLayout>
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_above="@id/edit_bottom_bar"
+		android:layout_alignParentTop="true" android:layout_height="fill_parent"
+		android:layout_width="fill_parent">
+		<LinearLayout android:layout_height="fill_parent"
+			android:layout_width="fill_parent" android:orientation="vertical">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:padding="3dip"
+				android:text="@string/edit_textview_type" />
+			<Spinner android:id="@+id/edit_spinner_type"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="3dip" android:prompt="@string/edit_spinner_type" />
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:padding="3dip"
+				android:text="@string/edit_textview_value" />
+			<EditText android:id="@+id/edit_edittext_value"
+				android:layout_width="fill_parent" android:layout_height="80dip"
+				android:padding="3dip" android:scrollbars="vertical"
+				android:layout_weight="1" />
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:padding="3dip"
+				android:text="@string/edit_textview_notes" />
+			<EditText android:id="@+id/edit_edittext_notes"
+				android:layout_width="fill_parent" android:layout_height="80dip"
+				android:padding="3dip" android:scrollbars="vertical"
+				android:layout_weight="1" />
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>

@@ -65,7 +65,7 @@ public class Viewer extends ListActivity {
 			startActivity(intent);
 			break;
 		case R.id.viewer_menu_context_launch:
-			barcodeCursor = mApplication.getDatabaseAdapter().fetchBarcode(barcode);
+			barcodeCursor = mApplication.getDatabaseAdapter().fetchSingle(barcode);
 			intent = new Intent();
 			intent.setAction(Intent.ACTION_VIEW);
 			intent.setData(Uri.parse(barcodeCursor.getString(barcodeCursor.getColumnIndexOrThrow(DatabaseAdapter.KEY_VALUE))));
@@ -77,7 +77,7 @@ public class Viewer extends ListActivity {
 			}
 			break;
 		case R.id.viewer_menu_context_share:
-			barcodeCursor = mApplication.getDatabaseAdapter().fetchBarcode(barcode);
+			barcodeCursor = mApplication.getDatabaseAdapter().fetchSingle(barcode);
 			intent = new Intent();
 			intent.setAction("com.google.zxing.client.android.ENCODE");
 			intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
@@ -88,7 +88,7 @@ public class Viewer extends ListActivity {
 			startActivity(intent);
 			break;
 		case R.id.viewer_menu_context_delete:
-			mApplication.getDatabaseAdapter().deleteBarcode(barcode);
+			mApplication.getDatabaseAdapter().deleteSingle(barcode);
 			mBarcodesCursor.requery();
 			break;
 		}
@@ -113,7 +113,7 @@ public class Viewer extends ListActivity {
 				startActivity(new Intent(Viewer.this, Edit.class));
 			}
 		});
-		mBarcodesCursor = mApplication.getDatabaseAdapter().fetchAllBarcodes();
+		mBarcodesCursor = mApplication.getDatabaseAdapter().fetchAll();
 		startManagingCursor(mBarcodesCursor);
 		String[] from = new String[] { DatabaseAdapter.KEY_VALUE, DatabaseAdapter.KEY_NOTES };
 		int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
@@ -141,6 +141,20 @@ public class Viewer extends ListActivity {
 	protected Dialog onCreateDialog(int id) {
 		Dialog dialog;
 		switch (id) {
+		case DIALOG_BARCODE_SCANNER_PROMPT:
+			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_barcode_scanner_prompt_title)).setMessage(
+					getText(R.string.viewer_dialog_barcode_scanner_prompt_message)).setPositiveButton(
+					getText(R.string.viewer_dialog_barcode_scanner_prompt_button_positive), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:com.google.zxing.client.android"));
+							startActivity(i);
+						}
+					}).setNegativeButton(getText(R.string.viewer_dialog_barcode_scanner_prompt_button_negative), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					finish();
+				}
+			}).create();
+			break;
 		case DIALOG_CONFIRM_DELETE_ALL:
 			dialog = new AlertDialog.Builder(this).setMessage(getText(R.string.viewer_dialog_delete_all_message)).setPositiveButton(
 					getText(R.string.viewer_dialog_delete_all_button_positive), new DialogInterface.OnClickListener() {
@@ -170,7 +184,7 @@ public class Viewer extends ListActivity {
 										mDialogInput.append(".csv");
 									}
 									BufferedWriter file = new BufferedWriter(new FileWriter(Environment.getExternalStorageDirectory().toString() + "/" + mDialogInput.getText()));
-									Cursor barcodes = mApplication.getDatabaseAdapter().fetchAllBarcodes();
+									Cursor barcodes = mApplication.getDatabaseAdapter().fetchAll();
 									file.write("VALUE,TYPE,NOTES");
 									file.newLine();
 									if (barcodes.moveToFirst()) {
@@ -218,20 +232,6 @@ public class Viewer extends ListActivity {
 							startActivity(new Intent(Add.ACTION_RAPID_SCAN, null, Viewer.this, Add.class));
 						}
 					}).create();
-			break;
-		case DIALOG_BARCODE_SCANNER_PROMPT:
-			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_barcode_scanner_prompt_title)).setMessage(
-					getText(R.string.viewer_dialog_barcode_scanner_prompt_message)).setPositiveButton(
-					getText(R.string.viewer_dialog_barcode_scanner_prompt_button_positive), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:com.google.zxing.client.android"));
-							startActivity(i);
-						}
-					}).setNegativeButton(getText(R.string.viewer_dialog_barcode_scanner_prompt_button_negative), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					finish();
-				}
-			}).create();
 			break;
 		case DIALOG_SD_CARD_GENERAL:
 			dialog = new AlertDialog.Builder(this).setMessage(
@@ -282,14 +282,11 @@ public class Viewer extends ListActivity {
 		case R.id.viewer_menu_options_export_csv:
 			showDialog(DIALOG_EXPORT_BARCODES);
 			return true;
-		case R.id.viewer_menu_options_rapid_scanning:
-			showDialog(DIALOG_RAPID_SCANNING);
-			return true;
 		case R.id.viewer_menu_options_export_email:
 			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 			emailIntent.setType("plain/text");
 			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Barcodes");
-			Cursor barcodes = mApplication.getDatabaseAdapter().fetchAllBarcodes();
+			Cursor barcodes = mApplication.getDatabaseAdapter().fetchAll();
 			String body = "VALUE,TYPE,NOTES\n";
 			if (barcodes.moveToFirst()) {
 				do {
@@ -306,6 +303,9 @@ public class Viewer extends ListActivity {
 			barcodes.close();
 			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT , body);
 			startActivity(Intent.createChooser(emailIntent, getString(R.string.viewer_menu_options_email_chooser)));
+			return true;
+		case R.id.viewer_menu_options_rapid_scanning:
+			showDialog(DIALOG_RAPID_SCANNING);
 			return true;
 		default:
 			return super.onMenuItemSelected(featureId, item);
