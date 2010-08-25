@@ -8,7 +8,10 @@
 	<item android:id="@+id/viewer_menu_options_rapid_scanning"
 		android:title="@string/viewer_menu_options_rapid_scanning"
 		android:icon="@drawable/barcodebox" />
-	<item android:id="@+id/viewer_menu_options_export_barcodes"
-		android:title="@string/viewer_menu_options_export_barcodes"
+	<item android:id="@+id/viewer_menu_options_export_csv"
+		android:title="@string/viewer_menu_options_export_csv"
+		android:icon="@drawable/barcodebox" />
+	<item android:id="@+id/viewer_menu_options_export_email"
+		android:title="@string/viewer_menu_options_export_email"
 		android:icon="@drawable/barcodebox" />
 </menu>

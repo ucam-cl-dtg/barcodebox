@@ -279,11 +279,33 @@ public class Viewer extends ListActivity {
 		case R.id.viewer_menu_options_delete_multiple:
 			startActivity(new Intent(this, Delete.class));
 			return true;
-		case R.id.viewer_menu_options_export_barcodes:
+		case R.id.viewer_menu_options_export_csv:
 			showDialog(DIALOG_EXPORT_BARCODES);
 			return true;
 		case R.id.viewer_menu_options_rapid_scanning:
 			showDialog(DIALOG_RAPID_SCANNING);
+			return true;
+		case R.id.viewer_menu_options_export_email:
+			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+			emailIntent.setType("plain/text");
+			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Barcodes");
+			Cursor barcodes = mApplication.getDatabaseAdapter().fetchAllBarcodes();
+			String body = "VALUE,TYPE,NOTES\n";
+			if (barcodes.moveToFirst()) {
+				do {
+					body += "\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_VALUE)).replaceAll("\"", "\"\"") + "\",";
+					body += "\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_TYPE)).replaceAll("\"", "\"\"") + "\",";
+					if(barcodes.isNull(barcodes.getColumnIndex(DatabaseAdapter.KEY_NOTES))) {
+						body += "null";
+					} else {
+						body += "\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_NOTES)).replaceAll("\"", "\"\"") + "\"";
+					}
+					body += "\n";
+				} while (barcodes.moveToNext());
+			}
+			barcodes.close();
+			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT , body);
+			startActivity(Intent.createChooser(emailIntent, getString(R.string.viewer_menu_options_email_chooser)));
 			return true;
 		default:
 			return super.onMenuItemSelected(featureId, item);

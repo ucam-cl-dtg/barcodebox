@@ -72,7 +72,9 @@
 	<string name="viewer_menu_context_share">Share</string>
 	<string name="viewer_menu_options_delete_all">Delete all</string>
 	<string name="viewer_menu_options_delete_multiple">Delete multiple</string>
-	<string name="viewer_menu_options_export_barcodes">Export barcodes</string>
+	<string name="viewer_menu_options_email_chooser">Send email...</string>
+	<string name="viewer_menu_options_export_csv">Export CSV</string>
+	<string name="viewer_menu_options_export_email">Email barcodes</string>
 	<string name="viewer_menu_options_rapid_scanning">Rapid scanning</string>
 	<string name="viewer_textview_list_empty">No barcodes</string>
 	<string-array name="types_array">
