@@ -1,5 +1,8 @@
 package uk.ac.cam.cl.dtg.android.pem.barcodebox.activities;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import uk.ac.cam.cl.dtg.android.pem.barcodebox.BarcodeBox;
@@ -15,6 +18,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -34,10 +39,18 @@ public class Viewer extends ListActivity {
 
 	private static final int DIALOG_BARCODE_SCANNER_PROMPT = 0;
 	private static final int DIALOG_CONFIRM_DELETE_ALL = 1;
-	private static final int DIALOG_INVALID_URI = 2;
-	private static final int DIALOG_RAPID_SCANNING = 3;
+	private static final int DIALOG_EXPORT_BARCODES = 2;
+	private static final int DIALOG_EXPORT_BARCODES_COMPLETE = 3;
+	private static final int DIALOG_EXPORT_BARCODES_ERROR = 4;
+	private static final int DIALOG_INVALID_URI = 5;
+	private static final int DIALOG_RAPID_SCANNING = 6;
+	private static final int DIALOG_SD_CARD_GENERAL = 7;
+	private static final int DIALOG_SD_CARD_REMOVED = 8;
+	private static final int DIALOG_SD_CARD_SHARED = 9;
+
 	private BarcodeBox mApplication;
 	private Cursor mBarcodesCursor;
+	private EditText mDialogInput;
 
 	// Called when user selects option from list context menu
 	@Override
@@ -137,13 +150,70 @@ public class Viewer extends ListActivity {
 						}
 					}).setNegativeButton(getText(R.string.viewer_dialog_delete_all_button_negative), null).create();
 			break;
+		case DIALOG_EXPORT_BARCODES:
+			mDialogInput = new EditText(this);
+			mDialogInput.setText("barcodes.csv");
+			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_export_barcodes_title)).setMessage(
+					getText(R.string.viewer_dialog_export_barcodes_message)).setView(mDialogInput).setPositiveButton(
+					getText(R.string.viewer_dialog_export_barcodes_button_positive), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							String state = Environment.getExternalStorageState();
+							if (state.equals(Environment.MEDIA_SHARED)) {
+								showDialog(DIALOG_SD_CARD_SHARED);
+							} else if (state.equals(Environment.MEDIA_REMOVED)) {
+								showDialog(DIALOG_SD_CARD_REMOVED);
+							} else if (!state.equals(Environment.MEDIA_MOUNTED)) {
+								showDialog(DIALOG_SD_CARD_GENERAL);
+							} else {
+								try {
+									if(!mDialogInput.getText().toString().endsWith(".csv")) {
+										mDialogInput.append(".csv");
+									}
+									BufferedWriter file = new BufferedWriter(new FileWriter(Environment.getExternalStorageDirectory().toString() + "/" + mDialogInput.getText()));
+									Cursor barcodes = mApplication.getDatabaseAdapter().fetchAllBarcodes();
+									file.write("VALUE,TYPE,NOTES");
+									file.newLine();
+									if (barcodes.moveToFirst()) {
+										do {
+											file.write(barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_VALUE)) + ",");
+											file.write(barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_TYPE)) + ",");
+											if(barcodes.isNull(barcodes.getColumnIndex(DatabaseAdapter.KEY_NOTES))) {
+												file.write("null");
+											} else {
+												file.write("\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_NOTES)) + "\"");
+											}
+											file.newLine();
+										} while (barcodes.moveToNext());
+									}
+									barcodes.close();
+									file.flush();
+									file.close();
+									showDialog(DIALOG_EXPORT_BARCODES_COMPLETE);
+								} catch (IOException e) {
+									showDialog(DIALOG_EXPORT_BARCODES_ERROR);
+								}	
+							}
+						}
+					}).setNegativeButton(getString(R.string.viewer_dialog_export_barcodes_button_negative), null).create();
+			break;
+		case DIALOG_EXPORT_BARCODES_COMPLETE:
+			dialog = new AlertDialog.Builder(this).setMessage(
+					getText(R.string.viewer_dialog_export_barcodes_complete_message)).setPositiveButton(
+					getText(R.string.viewer_dialog_export_barcodes_complete_button_positive), null).create();
+			break;
+		case DIALOG_EXPORT_BARCODES_ERROR:
+			dialog = new AlertDialog.Builder(this).setMessage(
+					getText(R.string.viewer_dialog_export_barcodes_error_message)).setPositiveButton(
+					getText(R.string.viewer_dialog_export_barcodes_error_button_positive), null).create();
+			break;
 		case DIALOG_INVALID_URI:
 			dialog = new AlertDialog.Builder(this).setMessage(getText(R.string.viewer_dialog_invalid_uri_message)).setPositiveButton(
 					getText(R.string.viewer_dialog_invalid_uri_button_positive), null).create();
 			break;
 		case DIALOG_RAPID_SCANNING:
-			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_rapid_scanning_title)).setMessage(getText(R.string.viewer_dialog_rapid_scanning_message)).setPositiveButton(
-					getText(R.string.viewer_dialog_rapid_scanning_button_positive), new DialogInterface.OnClickListener() {
+			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_rapid_scanning_title)).setMessage(
+					getText(R.string.viewer_dialog_rapid_scanning_message)).setPositiveButton(getText(R.string.viewer_dialog_rapid_scanning_button_positive),
+					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							startActivity(new Intent(Add.ACTION_RAPID_SCAN, null, Viewer.this, Add.class));
 						}
@@ -162,6 +232,21 @@ public class Viewer extends ListActivity {
 					finish();
 				}
 			}).create();
+			break;
+		case DIALOG_SD_CARD_GENERAL:
+			dialog = new AlertDialog.Builder(this).setMessage(
+					getText(R.string.viewer_dialog_sd_card_general_message)).setPositiveButton(
+					getText(R.string.viewer_dialog_sd_card_general_button_positive), null).create();
+			break;
+		case DIALOG_SD_CARD_REMOVED:
+			dialog = new AlertDialog.Builder(this).setMessage(
+					getText(R.string.viewer_dialog_sd_card_removed_message)).setPositiveButton(
+					getText(R.string.viewer_dialog_sd_card_removed_button_positive), null).create();
+			break;
+		case DIALOG_SD_CARD_SHARED:
+			dialog = new AlertDialog.Builder(this).setMessage(
+					getText(R.string.viewer_dialog_sd_card_shared_message)).setPositiveButton(
+					getText(R.string.viewer_dialog_sd_card_shared_button_positive), null).create();
 			break;
 		default:
 			dialog = null;
@@ -195,7 +280,7 @@ public class Viewer extends ListActivity {
 			startActivity(new Intent(this, Delete.class));
 			return true;
 		case R.id.viewer_menu_options_export_barcodes:
-			startActivity(new Intent(this, Export.class));
+			showDialog(DIALOG_EXPORT_BARCODES);
 			return true;
 		case R.id.viewer_menu_options_rapid_scanning:
 			showDialog(DIALOG_RAPID_SCANNING);
