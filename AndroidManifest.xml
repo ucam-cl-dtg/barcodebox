@@ -16,6 +16,9 @@
 		</activity>
 		<activity android:label="@string/activity_edit" android:name=".activities.Edit">
 		</activity>
+		<activity android:label="@string/activity_export"
+			android:name=".activities.Export">
+		</activity>
 		<activity android:label="@string/activity_delete"
 			android:name=".activities.Delete">
 		</activity>

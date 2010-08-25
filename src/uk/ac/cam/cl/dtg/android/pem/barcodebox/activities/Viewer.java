@@ -194,6 +194,9 @@ public class Viewer extends ListActivity {
 		case R.id.viewer_menu_options_delete_multiple:
 			startActivity(new Intent(this, Delete.class));
 			return true;
+		case R.id.viewer_menu_options_export_barcodes:
+			startActivity(new Intent(this, Export.class));
+			return true;
 		case R.id.viewer_menu_options_rapid_scanning:
 			showDialog(DIALOG_RAPID_SCANNING);
 			return true;

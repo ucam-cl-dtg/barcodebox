@@ -78,10 +78,10 @@ public class Edit extends Activity {
 		mRowId = extras != null ? extras.getLong(DatabaseAdapter.KEY_ROWID) : null;
 		if (mRowId != null) {
 			Cursor note = mApplication.getDatabaseAdapter().fetchBarcode(mRowId);
-			startManagingCursor(note);
 			mType = note.getString(note.getColumnIndexOrThrow(DatabaseAdapter.KEY_TYPE));
 			mValue = note.getString(note.getColumnIndexOrThrow(DatabaseAdapter.KEY_VALUE));
 			mNotes = note.getString(note.getColumnIndexOrThrow(DatabaseAdapter.KEY_NOTES));
+			note.close();
 		}
 		populateFields();
 	}

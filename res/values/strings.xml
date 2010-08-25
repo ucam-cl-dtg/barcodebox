@@ -3,6 +3,7 @@
 	<string name="activity_add">Barcode Box</string>
 	<string name="activity_delete">Barcode Box</string>
 	<string name="activity_edit">Barcode Box</string>
+	<string name="activity_export">Barcode Box</string>
 	<string name="activity_viewer">Barcode Box</string>
 	<string name="add_dialog_barcode_read_message_first_part">Adding barcode:</string>
 	<string name="add_dialog_barcode_read_message_second_part">of type</string>
@@ -47,6 +48,7 @@
 	<string name="viewer_menu_context_share">Share</string>
 	<string name="viewer_menu_options_delete_all">Delete all</string>
 	<string name="viewer_menu_options_delete_multiple">Delete multiple</string>
+	<string name="viewer_menu_options_export_barcodes">Export barcodes</string>
 	<string name="viewer_menu_options_rapid_scanning">Rapid scanning</string>
 	<string name="viewer_textview_list_empty">No barcodes</string>
 	<string-array name="types_array">
