@@ -5,4 +5,7 @@
 	<item android:id="@+id/viewer_menu_options_delete_all"
 		android:title="@string/viewer_menu_options_delete_all"
 		android:icon="@drawable/barcodebox" />
+	<item android:id="@+id/viewer_menu_options_rapid_scanning"
+		android:title="@string/viewer_menu_options_rapid_scanning"
+		android:icon="@drawable/barcodebox" />
 </menu>

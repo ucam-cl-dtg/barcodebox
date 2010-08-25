@@ -32,9 +32,10 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
  */
 public class Viewer extends ListActivity {
 
-	private static final int DIALOG_CONFIRM_DELETE_ALL = 0;
-	private static final int DIALOG_INVALID_URI = 1;
-	private static final int DIALOG_SCANNER_NOT_FOUND = 2;
+	private static final int DIALOG_BARCODE_SCANNER_PROMPT = 0;
+	private static final int DIALOG_CONFIRM_DELETE_ALL = 1;
+	private static final int DIALOG_INVALID_URI = 2;
+	private static final int DIALOG_RAPID_SCANNING = 3;
 	private BarcodeBox mApplication;
 	private Cursor mBarcodesCursor;
 
@@ -90,7 +91,7 @@ public class Viewer extends ListActivity {
 		((Button) findViewById(R.id.viewer_button_scan)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(Viewer.this, Add.class));
+				startActivity(new Intent(Add.ACTION_NORMAL_SCAN, null, Viewer.this, Add.class));
 			}
 		});
 		((Button) findViewById(R.id.viewer_button_create)).setOnClickListener(new View.OnClickListener() {
@@ -109,7 +110,7 @@ public class Viewer extends ListActivity {
 		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 		List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
 		if (list.size() == 0) {
-			showDialog(DIALOG_SCANNER_NOT_FOUND);
+			showDialog(DIALOG_BARCODE_SCANNER_PROMPT);
 		}
 	}
 
@@ -140,7 +141,15 @@ public class Viewer extends ListActivity {
 			dialog = new AlertDialog.Builder(this).setMessage(getText(R.string.viewer_dialog_invalid_uri_message)).setPositiveButton(
 					getText(R.string.viewer_dialog_invalid_uri_button_positive), null).create();
 			break;
-		case DIALOG_SCANNER_NOT_FOUND:
+		case DIALOG_RAPID_SCANNING:
+			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_rapid_scanning_title)).setMessage(getText(R.string.viewer_dialog_rapid_scanning_message)).setPositiveButton(
+					getText(R.string.viewer_dialog_rapid_scanning_button_positive), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							startActivity(new Intent(Add.ACTION_RAPID_SCAN, null, Viewer.this, Add.class));
+						}
+					}).create();
+			break;
+		case DIALOG_BARCODE_SCANNER_PROMPT:
 			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_barcode_scanner_prompt_title)).setMessage(
 					getText(R.string.viewer_dialog_barcode_scanner_prompt_message)).setPositiveButton(
 					getText(R.string.viewer_dialog_barcode_scanner_prompt_button_positive), new DialogInterface.OnClickListener() {
@@ -184,6 +193,9 @@ public class Viewer extends ListActivity {
 			return true;
 		case R.id.viewer_menu_options_delete_multiple:
 			startActivity(new Intent(this, Delete.class));
+			return true;
+		case R.id.viewer_menu_options_rapid_scanning:
+			showDialog(DIALOG_RAPID_SCANNING);
 			return true;
 		default:
 			return super.onMenuItemSelected(featureId, item);

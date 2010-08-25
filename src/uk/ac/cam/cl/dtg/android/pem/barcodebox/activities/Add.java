@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 
 /**
@@ -17,9 +16,10 @@ import android.os.Bundle;
  */
 public class Add extends Activity {
 
+	public static final String ACTION_NORMAL_SCAN = "NORMAL_SCAN";
+	public static final String ACTION_RAPID_SCAN = "RAPID_SCAN";
 	private static final int DIALOG_BARCODE_READ = 0;
 	private static final int DIALOG_DUPLICATE = 1;
-	private static final int DIALOG_SCANNER_ERROR = 2;
 	private BarcodeBox mApplication;
 	private String mType;
 	private String mValue;
@@ -31,13 +31,24 @@ public class Add extends Activity {
 			if (resultCode == RESULT_OK) {
 				mType = intent.getStringExtra("SCAN_RESULT_FORMAT");
 				mValue = intent.getStringExtra("SCAN_RESULT");
-				if (mApplication.getDatabaseAdapter().exists(mType, mValue)) {
-					showDialog(DIALOG_DUPLICATE);
-				} else {
-					showDialog(DIALOG_BARCODE_READ);
+				if (getIntent().getAction() == null) {
+					finish();
+				} else if (getIntent().getAction().equals(ACTION_NORMAL_SCAN)) {
+					if (mApplication.getDatabaseAdapter().exists(mType, mValue)) {
+						showDialog(DIALOG_DUPLICATE);
+					} else {
+						showDialog(DIALOG_BARCODE_READ);
+					}
+				} else if (getIntent().getAction().equals(ACTION_RAPID_SCAN)) {
+					if (mApplication.getDatabaseAdapter().exists(mType, mValue)) {
+						showDialog(DIALOG_DUPLICATE);
+					} else {
+						mApplication.getDatabaseAdapter().createBarcode(mType, mValue);
+						startActivityForResult(new Intent("com.google.zxing.client.android.SCAN"), 0);
+					}
 				}
 			} else {
-				showDialog(DIALOG_SCANNER_ERROR);
+				finish();
 			}
 		}
 	}
@@ -49,8 +60,7 @@ public class Add extends Activity {
 		setContentView(R.layout.add);
 		mApplication = (BarcodeBox) getApplication();
 		if (savedInstanceState == null) {
-			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-			startActivityForResult(intent, 0);
+			startActivityForResult(new Intent("com.google.zxing.client.android.SCAN"), 0);
 		} else {
 			mType = savedInstanceState.getString(DatabaseAdapter.KEY_ROWID);
 			mValue = savedInstanceState.getString(DatabaseAdapter.KEY_VALUE);
@@ -78,28 +88,27 @@ public class Add extends Activity {
 			dialog = new AlertDialog.Builder(this).setMessage(getText(R.string.add_dialog_duplicate_message) + " " + mValue + " (" + mType + ")")
 					.setPositiveButton(getText(R.string.add_dialog_duplicate_button_positive), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
-							mApplication.getDatabaseAdapter().createBarcode(mType, mValue);
-							finish();
+							if (getIntent().getAction() == null) {
+								finish();
+							} else if (getIntent().getAction().equals(ACTION_NORMAL_SCAN)) {
+								mApplication.getDatabaseAdapter().createBarcode(mType, mValue);
+								finish();
+							} else if (getIntent().getAction().equals(ACTION_RAPID_SCAN)) {
+								mApplication.getDatabaseAdapter().createBarcode(mType, mValue);
+								startActivityForResult(new Intent("com.google.zxing.client.android.SCAN"), 0);
+							}
 						}
 					}).setNegativeButton(getText(R.string.add_dialog_duplicate_button_negative), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
-							finish();
+							if (getIntent().getAction() == null) {
+								finish();
+							} else if (getIntent().getAction().equals(ACTION_NORMAL_SCAN)) {
+								finish();
+							} else if (getIntent().getAction().equals(ACTION_RAPID_SCAN)) {
+								startActivityForResult(new Intent("com.google.zxing.client.android.SCAN"), 0);
+							}
 						}
 					}).create();
-			break;
-		case DIALOG_SCANNER_ERROR:
-			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.add_dialog_scanner_error_title)).setMessage(
-					getText(R.string.add_dialog_scanner_error_message)).setPositiveButton(getText(R.string.add_dialog_scanner_error_button_positive),
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							finish();
-						}
-					}).setOnCancelListener(new OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					finish();
-				}
-			}).create();
 			break;
 		default:
 			dialog = null;
