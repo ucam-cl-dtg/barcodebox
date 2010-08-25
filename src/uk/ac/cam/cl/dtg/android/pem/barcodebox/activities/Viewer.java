@@ -175,12 +175,12 @@ public class Viewer extends ListActivity {
 									file.newLine();
 									if (barcodes.moveToFirst()) {
 										do {
-											file.write(barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_VALUE)) + ",");
-											file.write(barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_TYPE)) + ",");
+											file.write("\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_VALUE)).replaceAll("\"", "\"\"") + "\",");
+											file.write("\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_TYPE)).replaceAll("\"", "\"\"") + "\",");
 											if(barcodes.isNull(barcodes.getColumnIndex(DatabaseAdapter.KEY_NOTES))) {
 												file.write("null");
 											} else {
-												file.write("\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_NOTES)) + "\"");
+												file.write("\"" + barcodes.getString(barcodes.getColumnIndex(DatabaseAdapter.KEY_NOTES)).replaceAll("\"", "\"\"") + "\"");
 											}
 											file.newLine();
 										} while (barcodes.moveToNext());
