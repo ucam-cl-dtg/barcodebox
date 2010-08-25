@@ -1,5 +1,7 @@
 package uk.ac.cam.cl.dtg.android.pem.barcodebox.activities;
 
+import java.util.HashMap;
+
 import uk.ac.cam.cl.dtg.android.pem.barcodebox.BarcodeBox;
 import uk.ac.cam.cl.dtg.android.pem.barcodebox.R;
 import uk.ac.cam.cl.dtg.android.pem.barcodebox.database.DatabaseAdapter;
@@ -19,6 +21,7 @@ import android.widget.Spinner;
 public class Edit extends Activity {
 
 	private BarcodeBox mApplication;
+	private HashMap<String, Integer> mTypeMap;
 	private String mNotes;
 	private EditText mNotesText;
 	private Long mRowId;
@@ -26,20 +29,6 @@ public class Edit extends Activity {
 	private Spinner mTypeSpinner;
 	private String mValue;
 	private EditText mValueText;
-
-	// Horribly inefficient hacky way of getting position number for spinner
-	// from a string - done only like this because it was the first thing that
-	// came to mind
-	// while working with little time to spare
-	private int getSpinnerPosition(String type) {
-		String types[] = getResources().getStringArray(R.array.types_array);
-		for (int i = 0; i < types.length; i++) {
-			if (types[i].equals(type)) {
-				return i;
-			}
-		}
-		return 0;
-	}
 
 	// Called when the activity starts
 	@Override
@@ -52,6 +41,12 @@ public class Edit extends Activity {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.types_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mTypeSpinner.setAdapter(adapter);
+		// Used to find the position in the Spinner corresponding to a type
+		mTypeMap = new HashMap<String, Integer>();
+		String[] typeArray = getResources().getStringArray(R.array.types_array);
+		for(int i = 0; i < typeArray.length; i++) {
+			mTypeMap.put(typeArray[i], i);
+		}
 		mValueText = (EditText) findViewById(R.id.edit_edittext_value);
 		mNotesText = (EditText) findViewById(R.id.edit_edittext_notes);
 		((Button) findViewById(R.id.edit_button_save)).setOnClickListener(new View.OnClickListener() {
@@ -111,7 +106,7 @@ public class Edit extends Activity {
 	// TODO: See if this can be tidied up/is necessary
 	// Fill the text views with data from the database
 	private void populateFields() {
-		mTypeSpinner.setSelection(getSpinnerPosition(mType));
+		mTypeSpinner.setSelection(mTypeMap.get(mType));
 		mValueText.setText(mValue);
 		mNotesText.setText(mNotes);
 	}
