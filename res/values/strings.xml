@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="activity_add">Barcode Box</string>
-	<string name="activity_delete">Barcode Box</string>
-	<string name="activity_edit">Barcode Box</string>
-	<string name="activity_export">Barcode Box</string>
-	<string name="activity_viewer">Barcode Box</string>
+	<string name="activity_add">Barcode Box 2</string>
+	<string name="activity_delete">Barcode Box 2</string>
+	<string name="activity_edit">Barcode Box 2</string>
+	<string name="activity_export">Barcode Box 2</string>
+	<string name="activity_viewer">Barcode Box 2</string>
 	<string name="add_dialog_barcode_read_message_first_part">Adding barcode:</string>
 	<string name="add_dialog_barcode_read_message_second_part">of type</string>
 	<string name="add_dialog_barcode_read_title"></string>
@@ -14,7 +14,7 @@
 	<string name="add_dialog_duplicate_title"></string>
 	<string name="add_dialog_duplicate_button_negative">No</string>
 	<string name="add_dialog_duplicate_button_positive">Yes</string>
-	<string name="application_name">Barcode Box</string>
+	<string name="application_name">Barcode Box 2</string>
 	<string name="delete_button_cancel">Cancel</string>
 	<string name="delete_button_delete">Delete</string>
 	<string name="delete_textview_list_empty">No barcodes yet</string>

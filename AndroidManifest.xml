@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	android:versionCode="2" android:versionName="1.1" package="uk.ac.cam.cl.dtg.android.barcodebox">
+	android:versionCode="2" android:versionName="1.1"
+	package="uk.ac.cam.cl.dtg.android.barcodebox">
 	<application android:icon="@drawable/barcodebox"
-		android:label="@string/application_name" android:name=".BarcodeBox"
-		android:theme="@android:style/Theme.Light">
+		android:label="@string/application_name" android:theme="@android:style/Theme.Light"
+		android:name=".BarcodeBox">
 		<activity android:label="@string/activity_viewer"
 			android:name=".activities.Viewer">
 			<intent-filter>
