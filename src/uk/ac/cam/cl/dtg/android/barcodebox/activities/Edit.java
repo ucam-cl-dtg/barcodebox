@@ -106,7 +106,9 @@ public class Edit extends Activity {
 	// TODO: See if this can be tidied up/is necessary
 	// Fill the text views with data from the database
 	private void populateFields() {
-		mTypeSpinner.setSelection(mTypeMap.get(mType));
+		if(mType != null) {
+			mTypeSpinner.setSelection(mTypeMap.get(mType));
+		}
 		mValueText.setText(mValue);
 		mNotesText.setText(mNotes);
 	}
