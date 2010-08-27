@@ -1,13 +1,13 @@
-package uk.ac.cam.cl.dtg.android.pem.barcodebox.activities;
+package uk.ac.cam.cl.dtg.android.barcodebox.activities;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import uk.ac.cam.cl.dtg.android.pem.barcodebox.BarcodeBox;
-import uk.ac.cam.cl.dtg.android.pem.barcodebox.R;
-import uk.ac.cam.cl.dtg.android.pem.barcodebox.database.DatabaseAdapter;
+import uk.ac.cam.cl.dtg.android.barcodebox.BarcodeBox;
+import uk.ac.cam.cl.dtg.android.barcodebox.R;
+import uk.ac.cam.cl.dtg.android.barcodebox.database.DatabaseAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;

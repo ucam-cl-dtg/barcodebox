@@ -1,10 +1,10 @@
-package uk.ac.cam.cl.dtg.android.pem.barcodebox.activities;
+package uk.ac.cam.cl.dtg.android.barcodebox.activities;
 
 import java.util.HashMap;
 
-import uk.ac.cam.cl.dtg.android.pem.barcodebox.BarcodeBox;
-import uk.ac.cam.cl.dtg.android.pem.barcodebox.R;
-import uk.ac.cam.cl.dtg.android.pem.barcodebox.database.DatabaseAdapter;
+import uk.ac.cam.cl.dtg.android.barcodebox.BarcodeBox;
+import uk.ac.cam.cl.dtg.android.barcodebox.R;
+import uk.ac.cam.cl.dtg.android.barcodebox.database.DatabaseAdapter;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;

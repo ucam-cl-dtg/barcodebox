@@ -1,6 +1,6 @@
-package uk.ac.cam.cl.dtg.android.pem.barcodebox;
+package uk.ac.cam.cl.dtg.android.barcodebox;
 
-import uk.ac.cam.cl.dtg.android.pem.barcodebox.database.DatabaseAdapter;
+import uk.ac.cam.cl.dtg.android.barcodebox.database.DatabaseAdapter;
 import android.app.Application;
 
 /**

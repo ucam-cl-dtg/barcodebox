@@ -1,4 +1,4 @@
-package uk.ac.cam.cl.dtg.android.pem.barcodebox.database;
+package uk.ac.cam.cl.dtg.android.barcodebox.database;
 
 import android.content.ContentValues;
 import android.content.Context;
