@@ -79,7 +79,7 @@
 	<string name="viewer_textview_list_empty">No barcodes</string>
 	<string-array name="types_array">
         <item>QR_CODE</item>
-        <item>DATAMATRIX</item>
+        <item>DATA_MATRIX</item>
         <item>UPC_E</item>
         <item>UPC_A</item>
         <item>EAN_8</item>
