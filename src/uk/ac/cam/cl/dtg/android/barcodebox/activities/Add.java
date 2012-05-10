@@ -78,7 +78,8 @@ public class Add extends Activity {
 					getText(R.string.add_dialog_barcode_read_message_first_part) + " " + mValue + " "
 							+ getText(R.string.add_dialog_barcode_read_message_second_part) + " " + mType).setPositiveButton(
 					getText(R.string.add_dialog_barcode_read_button_positive), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+						@Override
+            public void onClick(DialogInterface dialog, int id) {
 							mApplication.getDatabaseAdapter().createBarcode(mType, mValue);
 							finish();
 						}
@@ -87,7 +88,8 @@ public class Add extends Activity {
 		case DIALOG_DUPLICATE:
 			dialog = new AlertDialog.Builder(this).setMessage(getText(R.string.add_dialog_duplicate_message) + " " + mValue + " (" + mType + ")")
 					.setPositiveButton(getText(R.string.add_dialog_duplicate_button_positive), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+						@Override
+            public void onClick(DialogInterface dialog, int id) {
 							if (getIntent().getAction() == null) {
 								finish();
 							} else if (getIntent().getAction().equals(ACTION_NORMAL_SCAN)) {
@@ -99,7 +101,8 @@ public class Add extends Activity {
 							}
 						}
 					}).setNegativeButton(getText(R.string.add_dialog_duplicate_button_negative), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+						@Override
+            public void onClick(DialogInterface dialog, int id) {
 							if (getIntent().getAction() == null) {
 								finish();
 							} else if (getIntent().getAction().equals(ACTION_NORMAL_SCAN)) {

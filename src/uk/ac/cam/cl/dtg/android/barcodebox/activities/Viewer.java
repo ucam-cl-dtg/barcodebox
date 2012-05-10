@@ -145,12 +145,14 @@ public class Viewer extends ListActivity {
 			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_barcode_scanner_prompt_title)).setMessage(
 					getText(R.string.viewer_dialog_barcode_scanner_prompt_message)).setPositiveButton(
 					getText(R.string.viewer_dialog_barcode_scanner_prompt_button_positive), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+						@Override
+            public void onClick(DialogInterface dialog, int id) {
 							Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:com.google.zxing.client.android"));
 							startActivity(i);
 						}
 					}).setNegativeButton(getText(R.string.viewer_dialog_barcode_scanner_prompt_button_negative), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
+				@Override
+        public void onClick(DialogInterface dialog, int id) {
 					finish();
 				}
 			}).create();
@@ -158,7 +160,8 @@ public class Viewer extends ListActivity {
 		case DIALOG_CONFIRM_DELETE_ALL:
 			dialog = new AlertDialog.Builder(this).setMessage(getText(R.string.viewer_dialog_delete_all_message)).setPositiveButton(
 					getText(R.string.viewer_dialog_delete_all_button_positive), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+						@Override
+            public void onClick(DialogInterface dialog, int id) {
 							mApplication.getDatabaseAdapter().deleteAll();
 							mBarcodesCursor.requery();
 						}
@@ -170,7 +173,8 @@ public class Viewer extends ListActivity {
 			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_export_barcodes_title)).setMessage(
 					getText(R.string.viewer_dialog_export_barcodes_message)).setView(mDialogInput).setPositiveButton(
 					getText(R.string.viewer_dialog_export_barcodes_button_positive), new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+						@Override
+            public void onClick(DialogInterface dialog, int id) {
 							String state = Environment.getExternalStorageState();
 							if (state.equals(Environment.MEDIA_SHARED)) {
 								showDialog(DIALOG_SD_CARD_SHARED);
@@ -228,7 +232,8 @@ public class Viewer extends ListActivity {
 			dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_rapid_scanning_title)).setMessage(
 					getText(R.string.viewer_dialog_rapid_scanning_message)).setPositiveButton(getText(R.string.viewer_dialog_rapid_scanning_button_positive),
 					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
+						@Override
+            public void onClick(DialogInterface dialog, int id) {
 							startActivity(new Intent(Add.ACTION_RAPID_SCAN, null, Viewer.this, Add.class));
 						}
 					}).create();

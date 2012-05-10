@@ -50,7 +50,8 @@ public class Edit extends Activity {
 		mValueText = (EditText) findViewById(R.id.edit_edittext_value);
 		mNotesText = (EditText) findViewById(R.id.edit_edittext_notes);
 		((Button) findViewById(R.id.edit_button_save)).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+      public void onClick(View view) {
 				String type = (String) mTypeSpinner.getSelectedItem();
 				String value = mValueText.getText().toString();
 				String notes = mNotesText.getText().toString();
