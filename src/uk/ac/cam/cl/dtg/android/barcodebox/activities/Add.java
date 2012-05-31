@@ -6,8 +6,10 @@ import uk.ac.cam.cl.dtg.android.barcodebox.database.DatabaseAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 /**
@@ -20,6 +22,7 @@ public class Add extends Activity {
 	public static final String ACTION_RAPID_SCAN = "RAPID_SCAN";
 	private static final int DIALOG_BARCODE_READ = 0;
 	private static final int DIALOG_DUPLICATE = 1;
+	private static final int DIALOG_BARCODE_SCANNER_PROMPT = 2;
 	private BarcodeBox mApplication;
 	private String mType;
 	private String mValue;
@@ -60,7 +63,11 @@ public class Add extends Activity {
 		setContentView(R.layout.add);
 		mApplication = (BarcodeBox) getApplication();
 		if (savedInstanceState == null) {
-			startActivityForResult(new Intent("com.google.zxing.client.android.SCAN"), 0);
+		  try {
+        startActivityForResult(new Intent("com.google.zxing.client.android.SCAN"), 0);
+		  } catch (ActivityNotFoundException e) {
+        showDialog(DIALOG_BARCODE_SCANNER_PROMPT);
+      }
 		} else {
 			mType = savedInstanceState.getString(DatabaseAdapter.KEY_ROWID);
 			mValue = savedInstanceState.getString(DatabaseAdapter.KEY_VALUE);
@@ -113,6 +120,22 @@ public class Add extends Activity {
 						}
 					}).create();
 			break;
+		case DIALOG_BARCODE_SCANNER_PROMPT:
+      dialog = new AlertDialog.Builder(this).setTitle(getText(R.string.viewer_dialog_barcode_scanner_prompt_title)).setMessage(
+          getText(R.string.viewer_dialog_barcode_scanner_prompt_message)).setPositiveButton(
+          getText(R.string.viewer_dialog_barcode_scanner_prompt_button_positive), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+              Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:com.google.zxing.client.android"));
+              startActivity(i);
+            }
+          }).setNegativeButton(getText(R.string.viewer_dialog_barcode_scanner_prompt_button_negative), new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+          finish();
+        }
+      }).create();
+      break;
 		default:
 			dialog = null;
 		}

@@ -11,6 +11,7 @@ import uk.ac.cam.cl.dtg.android.barcodebox.database.DatabaseAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -85,7 +86,11 @@ public class Viewer extends ListActivity {
 			intent.putExtra("com.google.zxing.client.android.ENCODE_FORMAT", barcodeCursor.getString(barcodeCursor
 					.getColumnIndexOrThrow(DatabaseAdapter.KEY_TYPE)));
 			barcodeCursor.close();
-			startActivity(intent);
+        try {
+          startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+          showDialog(DIALOG_BARCODE_SCANNER_PROMPT);
+        }
 			break;
 		case R.id.viewer_menu_context_delete:
 			mApplication.getDatabaseAdapter().deleteSingle(barcode);
